@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:slide_puzzle/screen/auth/signin.dart';
 import 'package:slide_puzzle/screen/home.screen.dart';
 
 
@@ -55,12 +56,12 @@ class Wrapper extends StatelessWidget {
                 return HomePage();
               }
               else {
-                return HomePage();
+                return SignInScreen();
               }
             },
           );
         } else {
-          return HomePage();
+          return SignInScreen();
         }
       },
     );

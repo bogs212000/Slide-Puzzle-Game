@@ -2,6 +2,7 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:slide_puzzle/screen/auth/signin.dart';
 import 'package:slide_puzzle/screen/auth/wrapper.dart';
 import 'package:slide_puzzle/screen/home.screen.dart';
 
@@ -27,7 +28,7 @@ class AuthWrapper extends StatelessWidget {
           } else if (snapshot.hasData) {
             return Wrapper();
           } else {
-            return HomePage();
+            return SignInScreen();
           }
         },
       ),

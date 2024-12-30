@@ -1,6 +1,10 @@
 import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:slide_puzzle/functions/play.functions.dart';
+import 'package:velocity_x/velocity_x.dart';
+
+import '../../utils/fonts.dart';
 
 class PuzzleScreen extends StatefulWidget {
   @override
@@ -9,15 +13,27 @@ class PuzzleScreen extends StatefulWidget {
 
 class _PuzzleScreenState extends State<PuzzleScreen> {
   List<List<int?>> grid = [];
-  final int gridSize = 4; // Grid size (4x4)
+  final int gridSize = 2; // Grid size (4x4)
   int moveCount = 0; // Move counter
   int elapsedSeconds = 0; // Timer in seconds
+  int score = 0; // Score variable
   Timer? timer;
+
+  final int baseScore = 1000; // Base score
+  final int movePenalty = 10; // Penalty per move
+  final int timePenalty = 5; // Penalty per second
+
 
   @override
   void initState() {
     super.initState();
     initializeGame();
+  }
+
+  void calculateScore() {
+    score = baseScore - (movePenalty * moveCount) - (timePenalty * elapsedSeconds);
+    if (score < 0) score = 0; // Ensure score is not negative
+    print(score);
   }
 
   void initializeGame() {
@@ -82,7 +98,9 @@ class _PuzzleScreenState extends State<PuzzleScreen> {
       // Check if the user has won
       if (checkWinCondition()) {
         timer?.cancel();
+        calculateScore();
         showWinDialog();
+        addScore(score);
       }
     }
   }
@@ -111,7 +129,7 @@ class _PuzzleScreenState extends State<PuzzleScreen> {
         return AlertDialog(
           title: Text('Congratulations!'),
           content: Text(
-              'You solved the puzzle in $moveCount moves and $elapsedSeconds seconds!'),
+              'You solved the puzzle in $moveCount moves and $elapsedSeconds seconds!. $score Scores!'),
           actions: [
             TextButton(
               onPressed: () {
@@ -135,24 +153,50 @@ class _PuzzleScreenState extends State<PuzzleScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Sliding Puzzle'),
-      ),
+      // appBar: AppBar(
+      //   title: Text('Sliding Puzzle'),
+      // ),
       body: Column(
         children: [
+          30.heightBox,
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  'Moves: $moveCount',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  'Time: ${elapsedSeconds}s',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
+                VxBox(
+                  child: Row(
+                    children: [
+                      Icon(Icons.touch_app_outlined, color: Colors.green),
+                      5.widthBox,
+                      'Moves : '.text.fontFamily(Fonts.figtree).bold.make(),
+                      '$moveCount'.text.fontFamily(Fonts.figtree).bold.make(),
+                    ],
+                  ),
+                )
+                    .padding(
+                    EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5))
+                    .rounded
+                    .border(color: Colors.green, width: 0.5)
+                    .white
+                    .make(),
+                Spacer(),
+                VxBox(
+                  child: Row(
+                    children: [
+                      Icon(Icons.timer, color: Colors.green),
+                      5.widthBox,
+                      'Timer : '.text.fontFamily(Fonts.figtree).bold.make(),
+                      '${elapsedSeconds}s'.text.fontFamily(Fonts.figtree).bold.make(),
+                    ],
+                  ),
+                )
+                    .padding(
+                    EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5))
+                    .rounded
+                    .border(color: Colors.green, width: 0.5)
+                    .white
+                    .make(),
               ],
             ),
           ),
@@ -179,7 +223,7 @@ class _PuzzleScreenState extends State<PuzzleScreen> {
                           margin: EdgeInsets.all(4),
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
-                            color: tile == null ? Colors.grey : Colors.blue,
+                            color: tile == null ? Colors.grey : Colors.green,
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Text(
