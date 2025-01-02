@@ -1,19 +1,21 @@
 import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:slide_puzzle/functions/play.functions.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-import '../../utils/fonts.dart';
+import '../../../utils/fonts.dart';
 
-class PuzzleScreen extends StatefulWidget {
+
+class OfflineGame extends StatefulWidget {
   @override
-  _PuzzleScreenState createState() => _PuzzleScreenState();
+  _OfflineGameState createState() => _OfflineGameState();
 }
 
-class _PuzzleScreenState extends State<PuzzleScreen> {
+class _OfflineGameState extends State<OfflineGame> {
   List<List<int?>> grid = [];
-  final int gridSize = 2; // Grid size (4x4)
+  final int gridSize = Get.arguments[1]; // Grid size (4x4)
   int moveCount = 0; // Move counter
   int elapsedSeconds = 0; // Timer in seconds
   int score = 0; // Score variable
@@ -100,7 +102,8 @@ class _PuzzleScreenState extends State<PuzzleScreen> {
         timer?.cancel();
         calculateScore();
         showWinDialog();
-        addScore(score);
+        // addScore(score);
+        // addCountEasyMode();
       }
     }
   }

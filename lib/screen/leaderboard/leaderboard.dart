@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../utils/fonts.dart';
+import '../../utils/images.dart';
 
 class LeaderboardScreen extends StatefulWidget {
   const LeaderboardScreen({super.key});
@@ -57,6 +58,10 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                   final user = users[index];
                   final username = user['username'];
                   final score = user['score'];
+                  final e = user['E'];
+                  final m = user['M'];
+                  final h = user['H'];
+                  final accEmail = user['email'];
 
                   return GestureDetector(
                     onTap: () {
@@ -103,17 +108,21 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.end,
                                         children: [
-                                          VxBox()
-                                              .height(5)
-                                              .width(150)
-                                              .color(Colors.blueAccent)
-                                              .rounded
+                                          'Mode play(E/M/H): '
+                                              .text
+                                              .fontFamily(Fonts.figtree)
+                                              .size(10)
                                               .make(),
+                                          '$e/$m/$h'.text.bold.size(10).make(),
                                           Spacer(),
-                                          // Image.asset(AppImages.trophy,
-                                          //     height: 15),
+                                          Image.asset(Assets.trophy,
+                                              height: 15),
                                           '$score'.text.size(15).bold.make(),
-                                          ' - Scores'.text.gray500.size(12).make(),
+                                          ' - Scores'
+                                              .text
+                                              .gray500
+                                              .size(12)
+                                              .make(),
                                         ],
                                       ),
                                     ],
@@ -123,7 +132,13 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                             ],
                           ),
                         ),
-                      ).height(100).rounded.shadowXs.color(Colors.white).make(),
+                      )
+                          .height(100)
+                          .border(color: Colors.green)
+                          .rounded
+                          .shadowXs
+                          .color(accEmail == FirebaseAuth.instance.currentUser!.email.toString() ? Vx.green100 : Colors.white)
+                          .make(),
                     ),
                   );
                 },

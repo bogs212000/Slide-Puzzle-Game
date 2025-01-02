@@ -5,6 +5,7 @@ import 'package:flutter_glow/flutter_glow.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:slide_puzzle/screen/auth/forgot.password.dart';
 import 'package:slide_puzzle/screen/auth/signup.dart';
 import 'package:slide_puzzle/screen/home.screen.dart';
 import 'package:slide_puzzle/screen/loadiing/loading.screen.dart';
@@ -168,6 +169,20 @@ class _SignInScreenState extends State<SignInScreen> {
                             Get.to(() => SignUpScreen());
                           },
                           child: "Sign up"
+                              .text
+                              .bold
+                              .fontFamily(Fonts.figtree)
+                              .make()),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TextButton(
+                          onPressed: () {
+                            Get.to(() => ForgotPassword());
+                          },
+                          child: "Forgot password"
                               .text
                               .bold
                               .fontFamily(Fonts.figtree)

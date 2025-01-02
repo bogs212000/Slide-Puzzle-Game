@@ -6,9 +6,13 @@ import 'package:flutter_glow/flutter_glow.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:slide_puzzle/screen/auth/auth.wrapper.dart';
-import 'package:slide_puzzle/screen/game/game.screen.dart';
+import 'package:slide_puzzle/screen/game/mode/hard.dart';
+import 'package:slide_puzzle/screen/game/mode/medium.dart';
+import 'package:slide_puzzle/screen/game/online.easy.dart';
+import 'package:slide_puzzle/screen/game/mode/easy.dart';
 import 'package:slide_puzzle/screen/leaderboard/leaderboard.dart';
 import 'package:slide_puzzle/screen/loadiing/loading.screen.dart';
+import 'package:slide_puzzle/screen/profile/profile.screen.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../functions/fetch.dart';
@@ -31,6 +35,27 @@ class _HomePageState extends State<HomePage> {
     getPlayerRank(setState);
   }
 
+  void signOut() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: 'Notice'.text.bold.size(10).make(),
+            content: 'Are you sure you want to sign out?'.text.fontFamily(Fonts.figtree).make(),
+            actions: [
+              TextButton(onPressed: () {
+                Get.back();
+              }, child: 'Cancel'.text.make()),
+              TextButton(onPressed: () async {
+                await FirebaseAuth.instance.signOut();
+                Get.back();
+                Get.offAll(AuthWrapper());
+              }, child: 'Confirm'.text.make()),
+            ],
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return username == null
@@ -47,14 +72,14 @@ class _HomePageState extends State<HomePage> {
                         backgroundColor: Colors.green,
                         foregroundColor: Colors.green,
                         radius: 25,
-                        backgroundImage: NetworkImage(
-                            'https://i.pinimg.com/originals/ed/dc/c3/eddcc3a683b8650eff4a22f47441b032.jpg'),
+                        backgroundImage: NetworkImage(NetImages.profile
+                            ),
                       ),
                       10.widthBox,
                       VxBox(
                         child: Row(
                           children: [
-                            Icon(Icons.star, color: Colors.yellow),
+                            Image.asset(Assets.trophy, height: 15),
                             5.widthBox,
                             '$score'.text.fontFamily(Fonts.figtree).bold.make()
                           ],
@@ -67,7 +92,7 @@ class _HomePageState extends State<HomePage> {
                           .white
                           .make(),
                       Spacer(),
-                      rank == null
+                      rank == null || rank == 0
                           ? ''.text.size(30).extraBold.make()
                           : '$rank'.text.size(30).extraBold.make(),
                       5.widthBox,
@@ -105,19 +130,22 @@ class _HomePageState extends State<HomePage> {
                   Row(
                     children: [
                       GestureDetector(
-                          onTap: () => {
-
-                              },
+                          onTap: () => {},
                           child: const Icon(Icons.lightbulb_circle_outlined,
                               color: Colors.blue, size: 30)),
                       15.widthBox,
                       GestureDetector(
                           onTap: () => {
-                            FirebaseAuth.instance.signOut(),
-                            Get.offAll(AuthWrapper())
-                          },
+                            signOut(),
+                              
+                              },
                           child: const Icon(Icons.outbond_outlined,
                               color: Colors.redAccent, size: 30)),
+                      15.widthBox,
+                      GestureDetector(
+                          onTap: () => {Get.to(() => ProfileScreen())},
+                          child: const Icon(Icons.person_2_rounded,
+                              color: Colors.grey, size: 30)),
                       Spacer(),
                     ],
                   ),
@@ -127,43 +155,52 @@ class _HomePageState extends State<HomePage> {
                       'Help'.text.size(5).fontFamily(Fonts.figtree).make(),
                       7.widthBox,
                       'Sign out'.text.size(5).fontFamily(Fonts.figtree).make(),
+                      7.widthBox,
+                      'Profile'.text.size(5).fontFamily(Fonts.figtree).make(),
                       Spacer(),
                     ],
                   ),
                   Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                            height: 50,
-                            width: 200,
-                            child: GlowButton(
-                                borderRadius: BorderRadius.circular(20),
-                                color: Colors.green,
-                                child: 'Easy'.text.size(25).bold.white.make(),
-                                onPressed: () {
-                                  Get.to(() => PuzzleScreen());
-                                })),
-                        10.heightBox,
-                        SizedBox(
-                            height: 50,
-                            width: 200,
-                            child: GlowButton(
-                                borderRadius: BorderRadius.circular(20),
-                                color: Colors.green,
-                                child: 'Medium'.text.size(25).bold.white.make(),
-                                onPressed: () {})),
-                        10.heightBox,
-                        SizedBox(
-                            height: 50,
-                            width: 200,
-                            child: GlowButton(
-                                borderRadius: BorderRadius.circular(20),
-                                color: Colors.green,
-                                child: 'Hard'.text.size(25).bold.white.make(),
-                                onPressed: () {})),
-                        10.heightBox,
-                      ],
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                              height: 50,
+                              width: double.infinity,
+                              child: GlowButton(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Colors.green,
+                                  child: 'Easy'.text.size(25).bold.white.make(),
+                                  onPressed: () {
+                                    Get.to(() => EasyMode());
+                                  })),
+                          20.heightBox,
+                          SizedBox(
+                              height: 50,
+                              width: double.infinity,
+                              child: GlowButton(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Colors.green,
+                                  child: 'Medium'.text.size(25).bold.white.make(),
+                                  onPressed: () {
+                                    Get.to(() => MediumMode());
+                                  })),
+                          20.heightBox,
+                          SizedBox(
+                              height: 50,
+                              width: double.infinity,
+                              child: GlowButton(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Colors.green,
+                                  child: 'Hard'.text.size(25).bold.white.make(),
+                                  onPressed: () {
+                                    Get.to(() => HardMode());
+                                  })),
+                          20.heightBox,
+                        ],
+                      ),
                     ),
                   ),
                 ],
