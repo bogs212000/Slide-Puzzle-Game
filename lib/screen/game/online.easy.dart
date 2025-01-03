@@ -102,6 +102,7 @@ class _OnlineEasyState extends State<OnlineEasy> {
 
       // Check if the user has won
       if (checkWinCondition()) {
+        win();
         timer?.cancel();
         calculateScore();
         showWinDialog();
@@ -188,6 +189,10 @@ class _OnlineEasyState extends State<OnlineEasy> {
   late AudioPlayer player = AudioPlayer();
 
   void tap() {
+    player.play(AssetSource(AppSounds.tap));
+  }
+
+  void win() {
     player.play(AssetSource(AppSounds.win));
   }
 
@@ -282,6 +287,7 @@ class _OnlineEasyState extends State<OnlineEasy> {
                                   int colIndex = row.indexOf(tile);
                                   moveTile(rowIndex, colIndex);
                                   calculateScore();
+                                  tap();
                                 },
                           child: Container(
                             width: 60,

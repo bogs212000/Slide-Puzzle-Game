@@ -209,8 +209,8 @@ class _HomePageState extends State<HomePage> {
                 .height(MediaQuery.of(context).size.height)
                 .width(MediaQuery.of(context).size.width)
                 .padding(EdgeInsets.all(20))
-                // .bgImage(DecorationImage(
-                //     image: AssetImage(Images.home_bg), fit: BoxFit.cover))
+                .bgImage(DecorationImage(
+                    image: AssetImage(Images.home_bg), fit: BoxFit.cover))
                 .white
                 .make(),
           );

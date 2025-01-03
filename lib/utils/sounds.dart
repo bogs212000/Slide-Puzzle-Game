@@ -1,4 +1,4 @@
 class AppSounds {
-  static const win = 'sounds/victory-sound.mp3';
-  static const tap = 'sounds/mixkit-video-game-win-2016.wav';
+  static const tap = 'sounds/mixkit-game-ball-tap-2073.wav';
+  static const win = 'sounds/video-game-happy-flourish-gamemaster-audio-4-00-01.mp3';
 }

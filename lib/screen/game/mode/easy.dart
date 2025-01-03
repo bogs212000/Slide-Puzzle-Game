@@ -62,7 +62,7 @@ class _EasyModeState extends State<EasyMode> {
                             borderRadius: BorderRadius.circular(20),
                             child: "PLAY".text.white.make(),
                             onPressed: ()=> {
-                              Get.to(() => OnlineEasy(), arguments:[ 1, 4])
+                              Get.to(() => OnlineEasy(), arguments:[ 1, 2])
                             }),
                       )
                     ],
