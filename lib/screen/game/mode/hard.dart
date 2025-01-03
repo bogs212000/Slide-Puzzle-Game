@@ -8,6 +8,7 @@ import 'package:slide_puzzle/screen/game/online.easy.dart';
 import 'package:slide_puzzle/utils/images.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../../../functions/fetch.dart';
 import '../../../utils/fonts.dart';
 import '../../../utils/text.dart';
 import '../offline/offline.game.dart';
@@ -47,7 +48,7 @@ class _HardModeState extends State<HardMode> {
                           .make(),
                       Image.asset(Assets.trophy, height: 20),
                       Spacer(),
-                      '8x8'.text.size(15).fontFamily(Fonts.figtree).bold.make(),
+                      '$hard x $hard'.text.size(15).fontFamily(Fonts.figtree).bold.make(),
 
                     ],
                   ),
@@ -63,7 +64,7 @@ class _HardModeState extends State<HardMode> {
                             borderRadius: BorderRadius.circular(20),
                             child: "PLAY".text.white.make(),
                             onPressed: ()=> {
-                              Get.to(() => OnlineHard(), arguments:[ 1, 8])
+                              Get.to(() => OnlineHard(), arguments:[ 1, hard])
                             }),
                       )
                     ],
@@ -90,7 +91,7 @@ class _HardModeState extends State<HardMode> {
                           .bold
                           .make(),
                       Spacer(),
-                      '8x8'.text.size(15).fontFamily(Fonts.figtree).bold.make(),
+                      '$hard x $hard'.text.size(15).fontFamily(Fonts.figtree).bold.make(),
                     ],
                   ),
                   Divider(),
@@ -105,7 +106,7 @@ class _HardModeState extends State<HardMode> {
                             borderRadius: BorderRadius.circular(20),
                             child: "PLAY".text.white.make(),
                             onPressed: ()=> {
-                              Get.to(() => OfflineGame(), arguments:[ 1, 8])
+                              Get.to(() => OfflineGame(), arguments:[ 1, hard])
                             }),
                       )
                     ],

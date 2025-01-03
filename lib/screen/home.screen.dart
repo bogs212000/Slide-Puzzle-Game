@@ -33,6 +33,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     getUserData(setState);
     getPlayerRank(setState);
+    getGameSize(setState);
   }
 
   void signOut() {

@@ -8,6 +8,7 @@ import 'package:slide_puzzle/screen/game/online.easy.dart';
 import 'package:slide_puzzle/utils/images.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../../../functions/fetch.dart';
 import '../../../utils/fonts.dart';
 import '../../../utils/text.dart';
 import '../offline/offline.game.dart';
@@ -46,7 +47,7 @@ class _EasyModeState extends State<EasyMode> {
                           .make(),
                       Image.asset(Assets.trophy, height: 20),
                       Spacer(),
-                      '4x4'.text.size(15).fontFamily(Fonts.figtree).bold.make(),
+                      '$easy x $easy'.text.size(15).fontFamily(Fonts.figtree).bold.make(),
 
                     ],
                   ),
@@ -62,7 +63,7 @@ class _EasyModeState extends State<EasyMode> {
                             borderRadius: BorderRadius.circular(20),
                             child: "PLAY".text.white.make(),
                             onPressed: ()=> {
-                              Get.to(() => OnlineEasy(), arguments:[ 1, 2])
+                              Get.to(() => OnlineEasy(), arguments:[ 1, easy])
                             }),
                       )
                     ],
@@ -89,7 +90,7 @@ class _EasyModeState extends State<EasyMode> {
                           .bold
                           .make(),
                       Spacer(),
-                      '4x4'.text.size(15).fontFamily(Fonts.figtree).bold.make(),
+                      '$easy x $easy'.text.size(15).fontFamily(Fonts.figtree).bold.make(),
                     ],
                   ),
                   Divider(),
@@ -104,7 +105,7 @@ class _EasyModeState extends State<EasyMode> {
                             borderRadius: BorderRadius.circular(20),
                             child: "PLAY".text.white.make(),
                             onPressed: ()=> {
-                              Get.to(() => OfflineGame(), arguments:[ 1, 4])
+                              Get.to(() => OfflineGame(), arguments:[ 1, easy])
                             }),
                       )
                     ],

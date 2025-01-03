@@ -7,6 +7,10 @@ int? score;
 String? email;
 int? rank;
 
+int? easy;
+int? medium;
+int? hard;
+
 Future<void> getUserData(setState) async {
   final snapshot = await FirebaseFirestore.instance
       .collection('users')
@@ -19,6 +23,19 @@ Future<void> getUserData(setState) async {
     email = snapshot.data()?['email'];
   });
   print('$score, $role, $email, $username');
+}
+
+Future<void> getGameSize(setState) async {
+  final snapshot = await FirebaseFirestore.instance
+      .collection('app')
+      .doc('mode size')
+      .get();
+  setState(() {
+    easy = snapshot.data()?['easy'];
+    medium = snapshot.data()?['medium'];
+    hard = snapshot.data()?['hard'];
+  });
+  print('$easy, $medium, $hard');
 }
 
 Future<int> getPlayerRank(setState) async {
@@ -52,3 +69,4 @@ Future<int> getPlayerRank(setState) async {
     return -1; // Return -1 to indicate an error
   }
 }
+
