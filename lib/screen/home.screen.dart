@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_glow/flutter_glow.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -42,16 +43,23 @@ class _HomePageState extends State<HomePage> {
         builder: (context) {
           return AlertDialog(
             title: 'Notice'.text.bold.size(10).make(),
-            content: 'Are you sure you want to sign out?'.text.fontFamily(Fonts.figtree).make(),
+            content: 'Are you sure you want to sign out?'
+                .text
+                .fontFamily(Fonts.figtree)
+                .make(),
             actions: [
-              TextButton(onPressed: () {
-                Get.back();
-              }, child: 'Cancel'.text.make()),
-              TextButton(onPressed: () async {
-                await FirebaseAuth.instance.signOut();
-                Get.back();
-                Get.offAll(AuthWrapper());
-              }, child: 'Confirm'.text.make()),
+              TextButton(
+                  onPressed: () {
+                    Get.back();
+                  },
+                  child: 'Cancel'.text.make()),
+              TextButton(
+                  onPressed: () async {
+                    await FirebaseAuth.instance.signOut();
+                    Get.back();
+                    Get.offAll(AuthWrapper());
+                  },
+                  child: 'Confirm'.text.make()),
             ],
           );
         });
@@ -73,9 +81,8 @@ class _HomePageState extends State<HomePage> {
                         backgroundColor: Colors.green,
                         foregroundColor: Colors.green,
                         radius: 25,
-                        backgroundImage: NetworkImage(NetImages.profile
-                            ),
-                      ),
+                        backgroundImage: NetworkImage(NetImages.profile),
+                      ).animate().fade(duration: 100.ms).scale(delay: 100.ms),
                       10.widthBox,
                       VxBox(
                         child: Row(
@@ -91,7 +98,10 @@ class _HomePageState extends State<HomePage> {
                           .rounded
                           .border(color: Colors.green, width: 0.5)
                           .white
-                          .make(),
+                          .make()
+                          .animate()
+                          .fade(duration: 200.ms)
+                          .scale(delay: 200.ms),
                       Spacer(),
                       rank == null || rank == 0
                           ? ''.text.size(30).extraBold.make()
@@ -119,12 +129,28 @@ class _HomePageState extends State<HomePage> {
                   5.heightBox,
                   Row(
                     children: [
-                      '$username'.text.white.fontFamily(Fonts.figtree).bold.make(),
+                      '$username'
+                          .text
+                          .white
+                          .fontFamily(Fonts.figtree)
+                          .bold
+                          .make()
+                          .animate()
+                          .fade(duration: 200.ms)
+                          .scale(delay: 200.ms),
                     ],
                   ),
                   Row(
                     children: [
-                      '$email'.text.white.size(10).fontFamily(Fonts.figtree).make(),
+                      '$email'
+                          .text
+                          .white
+                          .size(10)
+                          .fontFamily(Fonts.figtree)
+                          .make()
+                          .animate()
+                          .fade(duration: 200.ms)
+                          .scale(delay: 200.ms),
                     ],
                   ),
                   10.heightBox,
@@ -137,8 +163,7 @@ class _HomePageState extends State<HomePage> {
                       15.widthBox,
                       GestureDetector(
                           onTap: () => {
-                            signOut(),
-                              
+                                signOut(),
                               },
                           child: const Icon(Icons.outbond_outlined,
                               color: Colors.white, size: 30)),
@@ -147,63 +172,108 @@ class _HomePageState extends State<HomePage> {
                           onTap: () => {Get.to(() => ProfileScreen())},
                           child: const Icon(Icons.person_2_rounded,
                               color: Colors.white, size: 30)),
+                      15.widthBox,
+                      if(role == 'admin')GestureDetector(
+                          onTap: () => {Get.to(() => ProfileScreen())},
+                          child: const Icon(Icons.settings,
+                              color: Colors.white, size: 30)),
                       Spacer(),
                     ],
-                  ),
+                  ).animate().fade(duration: 200.ms).scale(delay: 200.ms),
                   Row(
                     children: [
                       2.widthBox,
-                      'Help'.text.size(5).white.fontFamily(Fonts.figtree).make(),
+                      'Help'
+                          .text
+                          .size(5)
+                          .white
+                          .fontFamily(Fonts.figtree)
+                          .make(),
                       7.widthBox,
-                      'Sign out'.text.size(5).white.fontFamily(Fonts.figtree).make(),
+                      'Sign out'
+                          .text
+                          .size(5)
+                          .white
+                          .fontFamily(Fonts.figtree)
+                          .make(),
                       7.widthBox,
-                      'Profile'.text.size(5).white.fontFamily(Fonts.figtree).make(),
+                      'Profile'
+                          .text
+                          .size(5)
+                          .white
+                          .fontFamily(Fonts.figtree)
+                          .make(),
+                      7.widthBox,
+                      if(role == 'admin')'Settings'
+                          .text
+                          .size(5)
+                          .white
+                          .fontFamily(Fonts.figtree)
+                          .make(),
                       Spacer(),
                     ],
-                  ),
+                  ).animate().fade(duration: 200.ms).scale(delay: 200.ms),
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(8.0),
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                              height: 50,
-                              width: double.infinity,
-                              child: GlowButton(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: Colors.green,
-                                  child: 'Easy'.text.size(25).bold.white.make(),
-                                  onPressed: () {
-                                    Get.to(() => EasyMode());
-                                  })),
-                          20.heightBox,
-                          SizedBox(
-                              height: 50,
-                              width: double.infinity,
-                              child: GlowButton(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: Colors.green,
-                                  child: 'Medium'.text.size(25).bold.white.make(),
-                                  onPressed: () {
-                                    Get.to(() => MediumMode());
-                                  })),
-                          20.heightBox,
-                          SizedBox(
-                              height: 50,
-                              width: double.infinity,
-                              child: GlowButton(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: Colors.green,
-                                  child: 'Hard'.text.size(25).bold.white.make(),
-                                  onPressed: () {
-                                    Get.to(() => HardMode());
-                                  })),
-                          20.heightBox,
-                        ],
-                      ),
+                          mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                  height: 50,
+                                  width: double.infinity,
+                                  child: GlowButton(
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: Colors.green,
+                                      child: 'Easy'
+                                          .text
+                                          .size(25)
+                                          .fontFamily(Fonts.figtree)
+                                          .bold
+                                          .white
+                                          .make(),
+                                      onPressed: () {
+                                        Get.to(() => EasyMode());
+                                      })),
+                              20.heightBox,
+                              SizedBox(
+                                  height: 50,
+                                  width: double.infinity,
+                                  child: GlowButton(
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: Colors.green,
+                                      child: 'Medium'
+                                          .text
+                                          .size(25)
+                                          .fontFamily(Fonts.figtree)
+                                          .bold
+                                          .white
+                                          .make(),
+                                      onPressed: () {
+                                        Get.to(() => MediumMode());
+                                      })),
+                              20.heightBox,
+                              SizedBox(
+                                  height: 50,
+                                  width: double.infinity,
+                                  child: GlowButton(
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: Colors.green,
+                                      child: 'Hard'
+                                          .text
+                                          .size(25)
+                                          .fontFamily(Fonts.figtree)
+                                          .bold
+                                          .white
+                                          .make(),
+                                      onPressed: () {
+                                        Get.to(() => HardMode());
+                                      })),
+                              20.heightBox,
+                            ],
+                          ),
                     ),
-                  ),
+                  ).animate().fade(duration: 200.ms).scale(delay: 200.ms),
                 ],
               ),
             )

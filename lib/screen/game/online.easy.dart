@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:slide_puzzle/functions/play.functions.dart';
 import 'package:slide_puzzle/screen/home.screen.dart';
@@ -309,7 +310,7 @@ class _OnlineEasyState extends State<OnlineEasy> {
                   }).toList(),
                 ),
               ),
-            ),
+            ).animate().fade(duration: 400.ms).scale(delay: 400.ms)
           ],
         ),
         // floatingActionButton: FloatingActionButton(

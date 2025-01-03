@@ -54,6 +54,8 @@ class Wrapper extends StatelessWidget {
                 ) {
               if ((userData.data!['role'] == "user")) {
                 return HomePage();
+              } else if((userData.data!['role'] == "admin")){
+                return HomePage();
               }
               else {
                 return SignInScreen();

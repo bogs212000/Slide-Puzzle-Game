@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_glow/flutter_glow.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -76,7 +77,7 @@ class _EasyModeState extends State<EasyMode> {
                 .rounded
                 .border(color: Colors.green)
                 .padding(EdgeInsets.all(20))
-                .make(),
+                .make().animate().fade(duration: 200.ms).scale(delay: 200.ms),
             10.heightBox,
             VxBox(
               child: Column(
@@ -118,7 +119,7 @@ class _EasyModeState extends State<EasyMode> {
                 .rounded
                 .border(color: Colors.green)
                 .padding(EdgeInsets.all(20))
-                .make(),
+                .make().animate().fade(duration: 400.ms).scale(delay: 400.ms),
           ],
         ),
       )

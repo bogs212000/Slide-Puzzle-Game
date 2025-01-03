@@ -19,7 +19,7 @@ class Auth {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
       // Get.offAll(AuthWrapper());
-      Navigator.of(context).pop();
+      Get.back();
     } catch(e){
       Navigator.of(context).pop();
       showSnackBar(context, '$e');

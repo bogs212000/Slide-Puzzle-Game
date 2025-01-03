@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:slide_puzzle/functions/play.functions.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -307,7 +308,7 @@ class _OnlineHardState extends State<OnlineHard> {
                   }).toList(),
                 ),
               ),
-            ),
+            ).animate().fade(duration: 400.ms).scale(delay: 400.ms)
           ],
         ),
         // floatingActionButton: FloatingActionButton(

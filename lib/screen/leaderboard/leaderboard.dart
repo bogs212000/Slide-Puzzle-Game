@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../utils/fonts.dart';
@@ -140,7 +141,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                           .color(accEmail == FirebaseAuth.instance.currentUser!.email.toString() ? Vx.green100 : Colors.white)
                           .make(),
                     ),
-                  );
+                  ).animate().fade(duration: 400.ms).scale(delay: 400.ms);
                 },
               );
             }),
