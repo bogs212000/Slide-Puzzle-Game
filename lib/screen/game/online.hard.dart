@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'dart:math';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:slide_puzzle/functions/play.functions.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../utils/fonts.dart';
+import '../../utils/sounds.dart';
 import '../auth/auth.wrapper.dart';
 import '../home.screen.dart';
 
@@ -105,6 +107,7 @@ class _OnlineHardState extends State<OnlineHard> {
         showWinDialog();
         addScore(score);
         addCountHardMode();
+        win();
       }
     }
   }
@@ -181,6 +184,17 @@ class _OnlineHardState extends State<OnlineHard> {
         );
       },
     );
+  }
+
+
+  late AudioPlayer player = AudioPlayer();
+
+  void tap() {
+    player.play(AssetSource(AppSounds.tap));
+  }
+
+  void win() {
+    player.play(AssetSource(AppSounds.win));
   }
 
   @override
@@ -270,6 +284,7 @@ class _OnlineHardState extends State<OnlineHard> {
                             int colIndex = row.indexOf(tile);
                             moveTile(rowIndex, colIndex);
                             calculateScore();
+                            tap();
                           },
                           child: Container(
                             width: 40,

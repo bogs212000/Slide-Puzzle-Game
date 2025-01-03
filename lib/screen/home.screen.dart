@@ -94,7 +94,7 @@ class _HomePageState extends State<HomePage> {
                       Spacer(),
                       rank == null || rank == 0
                           ? ''.text.size(30).extraBold.make()
-                          : '$rank'.text.size(30).extraBold.make(),
+                          : '$rank'.text.size(30).white.extraBold.make(),
                       5.widthBox,
                       GestureDetector(
                         onTap: () {
@@ -103,27 +103,27 @@ class _HomePageState extends State<HomePage> {
                         child: 'Rank'
                             .text
                             .size(15)
-                            .gray500
+                            .white
                             .fontFamily(Fonts.figtree)
                             .bold
                             .make(),
                       ),
-                      Icon(
+                      const Icon(
                         Icons.show_chart,
                         size: 20,
-                        color: Vx.gray500,
+                        color: Colors.white,
                       ),
                     ],
                   ),
                   5.heightBox,
                   Row(
                     children: [
-                      '$username'.text.fontFamily(Fonts.figtree).bold.make(),
+                      '$username'.text.white.fontFamily(Fonts.figtree).bold.make(),
                     ],
                   ),
                   Row(
                     children: [
-                      '$email'.text.size(10).fontFamily(Fonts.figtree).make(),
+                      '$email'.text.white.size(10).fontFamily(Fonts.figtree).make(),
                     ],
                   ),
                   10.heightBox,
@@ -132,7 +132,7 @@ class _HomePageState extends State<HomePage> {
                       GestureDetector(
                           onTap: () => {},
                           child: const Icon(Icons.lightbulb_circle_outlined,
-                              color: Colors.blue, size: 30)),
+                              color: Colors.white, size: 30)),
                       15.widthBox,
                       GestureDetector(
                           onTap: () => {
@@ -140,23 +140,23 @@ class _HomePageState extends State<HomePage> {
                               
                               },
                           child: const Icon(Icons.outbond_outlined,
-                              color: Colors.redAccent, size: 30)),
+                              color: Colors.white, size: 30)),
                       15.widthBox,
                       GestureDetector(
                           onTap: () => {Get.to(() => ProfileScreen())},
                           child: const Icon(Icons.person_2_rounded,
-                              color: Colors.grey, size: 30)),
+                              color: Colors.white, size: 30)),
                       Spacer(),
                     ],
                   ),
                   Row(
                     children: [
                       2.widthBox,
-                      'Help'.text.size(5).fontFamily(Fonts.figtree).make(),
+                      'Help'.text.size(5).white.fontFamily(Fonts.figtree).make(),
                       7.widthBox,
-                      'Sign out'.text.size(5).fontFamily(Fonts.figtree).make(),
+                      'Sign out'.text.size(5).white.fontFamily(Fonts.figtree).make(),
                       7.widthBox,
-                      'Profile'.text.size(5).fontFamily(Fonts.figtree).make(),
+                      'Profile'.text.size(5).white.fontFamily(Fonts.figtree).make(),
                       Spacer(),
                     ],
                   ),

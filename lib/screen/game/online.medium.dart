@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:math';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:slide_puzzle/functions/play.functions.dart';
@@ -7,6 +8,7 @@ import 'package:slide_puzzle/screen/auth/auth.wrapper.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../utils/fonts.dart';
+import '../../utils/sounds.dart';
 import '../home.screen.dart';
 
 class OnlineMedium extends StatefulWidget {
@@ -26,7 +28,6 @@ class _OnlineMediumState extends State<OnlineMedium> {
   final int movePenalty = 10; // Penalty per move
   final int timePenalty = 5; // Penalty per second
 
-
   @override
   void initState() {
     super.initState();
@@ -34,7 +35,8 @@ class _OnlineMediumState extends State<OnlineMedium> {
   }
 
   void calculateScore() {
-    score = baseScore - (movePenalty * moveCount) - (timePenalty * elapsedSeconds);
+    score =
+        baseScore - (movePenalty * moveCount) - (timePenalty * elapsedSeconds);
     if (score < 0) score = 0; // Ensure score is not negative
     print(score);
   }
@@ -105,6 +107,7 @@ class _OnlineMediumState extends State<OnlineMedium> {
         showWinDialog();
         addScore(score);
         addCountMediumMode();
+        win();
       }
     }
   }
@@ -132,8 +135,7 @@ class _OnlineMediumState extends State<OnlineMedium> {
       builder: (context) {
         return AlertDialog(
           title: Text('Notice'),
-          content: Text(
-              'Are you sure you want to exit game?'),
+          content: Text('Are you sure you want to exit game?'),
           actions: [
             TextButton(
               onPressed: () {
@@ -183,6 +185,16 @@ class _OnlineMediumState extends State<OnlineMedium> {
     );
   }
 
+  late AudioPlayer player = AudioPlayer();
+
+  void tap() {
+    player.play(AssetSource(AppSounds.tap));
+  }
+
+  void win() {
+    player.play(AssetSource(AppSounds.win));
+  }
+
   @override
   void dispose() {
     timer?.cancel();
@@ -191,7 +203,7 @@ class _OnlineMediumState extends State<OnlineMedium> {
 
   @override
   Widget build(BuildContext context) {
-    return  WillPopScope(
+    return WillPopScope(
       onWillPop: () async {
         // Navigate back using GetX
         return false; // Prevent default back button behavior
@@ -218,8 +230,8 @@ class _OnlineMediumState extends State<OnlineMedium> {
                       ],
                     ),
                   )
-                      .padding(
-                      EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5))
+                      .padding(EdgeInsets.only(
+                          left: 10, right: 10, top: 5, bottom: 5))
                       .rounded
                       .border(color: Colors.green, width: 0.5)
                       .white
@@ -228,20 +240,24 @@ class _OnlineMediumState extends State<OnlineMedium> {
                       onPressed: () {
                         exit();
                       },
-                      icon:
-                      Icon(Icons.home_filled, size: 30, color: Colors.green)),
+                      icon: Icon(Icons.home_filled,
+                          size: 30, color: Colors.green)),
                   VxBox(
                     child: Row(
                       children: [
                         Icon(Icons.timer, color: Colors.green),
                         5.widthBox,
                         'Timer : '.text.fontFamily(Fonts.figtree).bold.make(),
-                        '${elapsedSeconds}s'.text.fontFamily(Fonts.figtree).bold.make(),
+                        '${elapsedSeconds}s'
+                            .text
+                            .fontFamily(Fonts.figtree)
+                            .bold
+                            .make(),
                       ],
                     ),
                   )
-                      .padding(
-                      EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5))
+                      .padding(EdgeInsets.only(
+                          left: 10, right: 10, top: 5, bottom: 5))
                       .rounded
                       .border(color: Colors.green, width: 0.5)
                       .white
@@ -251,7 +267,12 @@ class _OnlineMediumState extends State<OnlineMedium> {
             ),
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: 'Estimated Score ($baseScore - (10 * move count) - (5 * elapsed seconds)) : $score'.text.fontFamily(Fonts.figtree).size(10).make(),
+              child:
+                  'Estimated Score ($baseScore - (10 * move count) - (5 * elapsed seconds)) : $score'
+                      .text
+                      .fontFamily(Fonts.figtree)
+                      .size(10)
+                      .make(),
             ),
             Expanded(
               child: Center(
@@ -265,12 +286,13 @@ class _OnlineMediumState extends State<OnlineMedium> {
                           onTap: tile == null
                               ? null
                               : () {
-                            // Get row and column of the tapped tile
-                            int rowIndex = grid.indexOf(row);
-                            int colIndex = row.indexOf(tile);
-                            moveTile(rowIndex, colIndex);
-                            calculateScore();
-                          },
+                                  // Get row and column of the tapped tile
+                                  int rowIndex = grid.indexOf(row);
+                                  int colIndex = row.indexOf(tile);
+                                  moveTile(rowIndex, colIndex);
+                                  calculateScore();
+                                  tap();
+                                },
                           child: Container(
                             width: 50,
                             height: 50,
@@ -283,7 +305,7 @@ class _OnlineMediumState extends State<OnlineMedium> {
                             child: Text(
                               tile?.toString() ?? '',
                               style:
-                              TextStyle(color: Colors.white, fontSize: 24),
+                                  TextStyle(color: Colors.white, fontSize: 24),
                             ),
                           ),
                         );
