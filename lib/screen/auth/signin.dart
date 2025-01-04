@@ -13,6 +13,7 @@ import 'package:slide_puzzle/utils/fonts.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../functions/auth.functions.dart';
+import '../../utils/images.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -49,6 +50,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       'Riddle Resolver'
                           .text
                           .bold
+                          .white
                           .fontFamily(Fonts.figtree)
                           .size(25)
                           .make(),
@@ -58,6 +60,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     children: [
                       'Sign in first to continue'
                           .text
+                          .white
                           .fontFamily(Fonts.figtree)
                           .size(15)
                           .make(),
@@ -143,9 +146,8 @@ class _SignInScreenState extends State<SignInScreen> {
                               context: context,
                               barrierDismissible: false,
                               builder: (BuildContext context) {
-                                return
-                                  LoadingAnimationWidget.threeRotatingDots(
-                                      color: Colors.white, size: 40);
+                                return LoadingAnimationWidget.threeRotatingDots(
+                                    color: Colors.white, size: 40);
                               });
                           Auth().SignIn(context, emailController.text.trim(),
                               passwordController.text.trim());
@@ -162,6 +164,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       "Don't have an account?"
                           .text
                           .fontFamily(Fonts.figtree)
+                          .white
                           .make(),
                       5.widthBox,
                       TextButton(
@@ -171,6 +174,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           child: "Sign up"
                               .text
                               .bold
+                              .white
                               .fontFamily(Fonts.figtree)
                               .make()),
                     ],
@@ -185,6 +189,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           child: "Forgot password"
                               .text
                               .bold
+                              .white
                               .fontFamily(Fonts.figtree)
                               .make()),
                     ],
@@ -195,7 +200,8 @@ class _SignInScreenState extends State<SignInScreen> {
                 .height(MediaQuery.of(context).size.height)
                 .width(MediaQuery.of(context).size.width)
                 .padding(EdgeInsets.all(40))
-                .white
+                .bgImage(DecorationImage(
+                    image: AssetImage(Images.home_bg), fit: BoxFit.cover))
                 .make(),
           );
   }

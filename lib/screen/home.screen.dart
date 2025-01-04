@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,7 @@ import 'package:velocity_x/velocity_x.dart';
 import '../functions/fetch.dart';
 import '../utils/fonts.dart';
 import '../utils/images.dart';
+import '../utils/sounds.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -28,6 +30,18 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final AudioPlayer player = AudioPlayer();
+
+
+  void bg_music() async {
+    if (!isPlaying) {
+      await player.setReleaseMode(ReleaseMode.loop); // Set the music to loop
+      await player.play(AssetSource(AppSounds.bg_music)); // Play the music
+      setState(() {
+        isPlaying = true; // Mark as playing
+      });
+    }
+  }
   @override
   void initState() {
     // TODO: implement initState
@@ -35,6 +49,7 @@ class _HomePageState extends State<HomePage> {
     getUserData(setState);
     getPlayerRank(setState);
     getGameSize(setState);
+    bg_music();
   }
 
   void signOut() {

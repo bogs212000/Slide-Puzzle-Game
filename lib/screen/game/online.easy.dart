@@ -29,10 +29,21 @@ class _OnlineEasyState extends State<OnlineEasy> {
   final int movePenalty = 10; // Penalty per move
   final int timePenalty = 5; // Penalty per second
 
+  void bg_music() async {
+    if (!isPlaying) {
+      await player.setReleaseMode(ReleaseMode.loop); // Set the music to loop
+      await player.play(AssetSource(AppSounds.bg_music)); // Play the music
+      setState(() {
+        isPlaying = true; // Mark as playing
+      });
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     initializeGame();
+    bg_music();
   }
 
   void calculateScore() {

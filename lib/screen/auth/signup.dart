@@ -10,6 +10,7 @@ import 'package:velocity_x/velocity_x.dart';
 
 import '../../functions/auth.functions.dart';
 import '../../utils/fonts.dart';
+import '../../utils/images.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -39,8 +40,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
             body: VxBox(
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  20.heightBox,
                   SizedBox(
                     height: 50,
                     child: TextField(
@@ -191,9 +192,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               context: context,
                               barrierDismissible: false,
                               builder: (BuildContext context) {
-                                return
-                                  LoadingAnimationWidget.threeRotatingDots(
-                                      color: Colors.white, size: 40);
+                                return LoadingAnimationWidget.threeRotatingDots(
+                                    color: Colors.white, size: 40);
                               });
                           Auth().SignUp(
                               context,
@@ -212,7 +212,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 .height(MediaQuery.of(context).size.height)
                 .width(MediaQuery.of(context).size.width)
                 .padding(EdgeInsets.only(left: 40, right: 40))
-                .white
+                .bgImage(DecorationImage(
+                    image: AssetImage(Images.home_bg), fit: BoxFit.cover))
                 .make(),
           );
   }
