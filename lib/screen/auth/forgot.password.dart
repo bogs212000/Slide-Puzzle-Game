@@ -5,6 +5,7 @@ import 'package:velocity_x/velocity_x.dart';
 
 import '../../functions/auth.functions.dart';
 import '../../utils/fonts.dart';
+import '../../utils/images.dart';
 
 class ForgotPassword extends StatefulWidget {
   const ForgotPassword({super.key});
@@ -19,19 +20,21 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
+        backgroundColor: Colors.transparent,
+        foregroundColor: Colors.white,
         title: 'Forgot Password'.text.bold.make(),
         centerTitle: true,
       ),
       body: VxBox(
         child: Column(
           children: [
-            30.heightBox,
+            50.heightBox,
             'Kindly provide your email address, and we will send a link to reset your password to your inbox.'
                 .text
                 .size(20)
+                .white
                 .fontFamily(Fonts.figtree)
                 .make(),
             20.heightBox,
@@ -69,18 +72,17 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 color: Colors.green,
                 onPressed: () {
                   if (email.text.isEmpty) {
-                    showSnackBar(
-                        context, 'Please enter your email address.');
+                    showSnackBar(context, 'Please enter your email address.');
                   } else {
                     showDialog(
                         context: context,
                         barrierDismissible: false,
                         builder: (BuildContext context) {
-                          return
-                            LoadingAnimationWidget.threeRotatingDots(
-                                color: Colors.white, size: 40);
+                          return LoadingAnimationWidget.threeRotatingDots(
+                              color: Colors.white, size: 40);
                         });
-                    Auth().sendChangePasswordLink(context, email.text.toLowerCase().trim());
+                    Auth().sendChangePasswordLink(
+                        context, email.text.toLowerCase().trim());
                   }
                 },
                 child: 'Request link'.text.white.make(),
@@ -91,7 +93,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
       )
           .height(MediaQuery.of(context).size.height)
           .width(MediaQuery.of(context).size.width)
-          .white
+          .bgImage(DecorationImage(
+              image: AssetImage(Images.home_bg), fit: BoxFit.cover))
           .padding(EdgeInsets.all(40))
           .make(),
     );

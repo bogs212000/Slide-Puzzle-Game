@@ -32,11 +32,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return loading == true
         ? LoadingScreen()
         : Scaffold(
+      extendBodyBehindAppBar: true,
             appBar: AppBar(
-              backgroundColor: Colors.white,
+              backgroundColor: Colors.transparent,
+              foregroundColor: Colors.white,
               centerTitle: true,
               title:
-                  'Create Account'.text.fontFamily(Fonts.figtree).bold.make(),
+                  'Create Account'.text.white.fontFamily(Fonts.figtree).bold.make(),
             ),
             body: VxBox(
               child: Column(

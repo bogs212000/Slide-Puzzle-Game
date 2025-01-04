@@ -8,6 +8,7 @@ import 'package:slide_puzzle/functions/play.functions.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../utils/fonts.dart';
+import '../../utils/images.dart';
 import '../../utils/sounds.dart';
 import '../auth/auth.wrapper.dart';
 import '../home.screen.dart';
@@ -29,7 +30,6 @@ class _OnlineHardState extends State<OnlineHard> {
   final int movePenalty = 10; // Penalty per move
   final int timePenalty = 5; // Penalty per second
 
-
   @override
   void initState() {
     super.initState();
@@ -37,7 +37,8 @@ class _OnlineHardState extends State<OnlineHard> {
   }
 
   void calculateScore() {
-    score = baseScore - (movePenalty * moveCount) - (timePenalty * elapsedSeconds);
+    score =
+        baseScore - (movePenalty * moveCount) - (timePenalty * elapsedSeconds);
     if (score < 0) score = 0; // Ensure score is not negative
     print(score);
   }
@@ -136,8 +137,7 @@ class _OnlineHardState extends State<OnlineHard> {
       builder: (context) {
         return AlertDialog(
           title: Text('Notice'),
-          content: Text(
-              'Are you sure you want to exit game?'),
+          content: Text('Are you sure you want to exit game?'),
           actions: [
             TextButton(
               onPressed: () {
@@ -187,7 +187,6 @@ class _OnlineHardState extends State<OnlineHard> {
     );
   }
 
-
   late AudioPlayer player = AudioPlayer();
 
   void tap() {
@@ -206,7 +205,7 @@ class _OnlineHardState extends State<OnlineHard> {
 
   @override
   Widget build(BuildContext context) {
-    return  WillPopScope(
+    return WillPopScope(
       onWillPop: () async {
         // Navigate back using GetX
         return false; // Prevent default back button behavior
@@ -215,102 +214,124 @@ class _OnlineHardState extends State<OnlineHard> {
         // appBar: AppBar(
         //   title: Text('Sliding Puzzle'),
         // ),
-        body: Column(
-          children: [
-            30.heightBox,
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  VxBox(
-                    child: Row(
-                      children: [
-                        Icon(Icons.touch_app_outlined, color: Colors.green),
-                        5.widthBox,
-                        'Moves : '.text.fontFamily(Fonts.figtree).bold.make(),
-                        '$moveCount'.text.fontFamily(Fonts.figtree).bold.make(),
-                      ],
-                    ),
-                  )
-                      .padding(
-                      EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5))
-                      .rounded
-                      .border(color: Colors.green, width: 0.5)
-                      .white
-                      .make(),
-                  IconButton(
-                      onPressed: () {
-                       exit();
-                      },
-                      icon:
-                      Icon(Icons.home_filled, size: 30, color: Colors.green)),
-                  VxBox(
-                    child: Row(
-                      children: [
-                        Icon(Icons.timer, color: Colors.green),
-                        5.widthBox,
-                        'Timer : '.text.fontFamily(Fonts.figtree).bold.make(),
-                        '${elapsedSeconds}s'.text.fontFamily(Fonts.figtree).bold.make(),
-                      ],
-                    ),
-                  )
-                      .padding(
-                      EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5))
-                      .rounded
-                      .border(color: Colors.green, width: 0.5)
-                      .white
-                      .make(),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: 'Estimated Score ($baseScore - (10 * move count) - (5 * elapsed seconds)) : $score'.text.fontFamily(Fonts.figtree).size(10).make(),
-            ),
-            Expanded(
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: grid.map((row) {
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: row.map((tile) {
-                        return GestureDetector(
-                          onTap: tile == null
-                              ? null
-                              : () {
-                            // Get row and column of the tapped tile
-                            int rowIndex = grid.indexOf(row);
-                            int colIndex = row.indexOf(tile);
-                            moveTile(rowIndex, colIndex);
-                            calculateScore();
-                            tap();
-                          },
-                          child: Container(
-                            width: 40,
-                            height: 40,
-                            margin: EdgeInsets.all(1),
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              color: tile == null ? Colors.grey : Colors.green,
-                              borderRadius: BorderRadius.circular(2),
-                            ),
-                            child: Text(
-                              tile?.toString() ?? '',
-                              style:
-                              TextStyle(color: Colors.white, fontSize: 24),
-                            ),
-                          ),
-                        );
-                      }).toList(),
-                    );
-                  }).toList(),
+        body: VxBox(
+          child: Column(
+            children: [
+              30.heightBox,
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    VxBox(
+                      child: Row(
+                        children: [
+                          Icon(Icons.touch_app_outlined, color: Colors.green),
+                          5.widthBox,
+                          'Moves : '.text.fontFamily(Fonts.figtree).bold.make(),
+                          '$moveCount'
+                              .text
+                              .fontFamily(Fonts.figtree)
+                              .bold
+                              .make(),
+                        ],
+                      ),
+                    )
+                        .padding(EdgeInsets.only(
+                            left: 10, right: 10, top: 5, bottom: 5))
+                        .rounded
+                        .border(color: Colors.green, width: 0.5)
+                        .white
+                        .make(),
+                    IconButton(
+                        onPressed: () {
+                          exit();
+                        },
+                        icon: Icon(Icons.home_filled,
+                            size: 30, color: Colors.green)),
+                    VxBox(
+                      child: Row(
+                        children: [
+                          Icon(Icons.timer, color: Colors.green),
+                          5.widthBox,
+                          'Timer : '.text.fontFamily(Fonts.figtree).bold.make(),
+                          '${elapsedSeconds}s'
+                              .text
+                              .fontFamily(Fonts.figtree)
+                              .bold
+                              .make(),
+                        ],
+                      ),
+                    )
+                        .padding(EdgeInsets.only(
+                            left: 10, right: 10, top: 5, bottom: 5))
+                        .rounded
+                        .border(color: Colors.green, width: 0.5)
+                        .white
+                        .make(),
+                  ],
                 ),
               ),
-            ).animate().fade(duration: 400.ms).scale(delay: 400.ms)
-          ],
-        ),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child:
+                    'Estimated Score ($baseScore - (10 * move count) - (5 * elapsed seconds)) : $score'
+                        .text
+                        .fontFamily(Fonts.figtree)
+                        .size(10)
+                        .white
+                        .make(),
+              ),
+              Expanded(
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: grid.map((row) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: row.map((tile) {
+                          return GestureDetector(
+                            onTap: tile == null
+                                ? null
+                                : () {
+                                    // Get row and column of the tapped tile
+                                    int rowIndex = grid.indexOf(row);
+                                    int colIndex = row.indexOf(tile);
+                                    moveTile(rowIndex, colIndex);
+                                    calculateScore();
+                                    tap();
+                                  },
+                            child: Container(
+                              width: 40,
+                              height: 40,
+                              margin: EdgeInsets.all(1),
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                color:
+                                    tile == null ? Colors.grey : Colors.green,
+                                borderRadius: BorderRadius.circular(2),
+                              ),
+                              child: Text(
+                                tile?.toString() ?? '',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 24),
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                      );
+                    }).toList(),
+                  ),
+                ),
+              ).animate().fade(duration: 400.ms).scale(delay: 400.ms)
+            ],
+          ),
+        )
+            .height(MediaQuery.of(context).size.height)
+            .width(MediaQuery.of(context).size.width)
+            .bgImage(DecorationImage(
+                image: AssetImage(Images.home_bg), fit: BoxFit.cover))
+            .make(),
         // floatingActionButton: FloatingActionButton(
         //   onPressed: initializeGame,
         //   child: Icon(Icons.refresh),
