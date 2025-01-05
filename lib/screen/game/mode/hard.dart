@@ -26,15 +26,23 @@ class _HardModeState extends State<HardMode> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        foregroundColor: Colors.white,
+        backgroundColor: Colors.transparent,
         centerTitle: true,
-        title: 'Hard Mode'.text.bold.make(),
+        title: 'Hard Mode'.text.white.bold.make(),
       ),
       body: VxBox(
         child: Column(
           children: [
-            Txt.note_play_online.text.size(15).fontFamily(Fonts.figtree).bold.make(),
+            70.heightBox,
+            Txt.note_play_online.text
+                .size(15)
+                .fontFamily(Fonts.figtree)
+                .white
+                .bold
+                .make(),
             20.heightBox,
             VxBox(
               child: Column(
@@ -49,8 +57,12 @@ class _HardModeState extends State<HardMode> {
                           .make(),
                       Image.asset(Assets.trophy, height: 20),
                       Spacer(),
-                      '$hard x $hard'.text.size(15).fontFamily(Fonts.figtree).bold.make(),
-
+                      '$hard x $hard'
+                          .text
+                          .size(15)
+                          .fontFamily(Fonts.figtree)
+                          .bold
+                          .make(),
                     ],
                   ),
                   Divider(),
@@ -64,21 +76,26 @@ class _HardModeState extends State<HardMode> {
                             color: Colors.green,
                             borderRadius: BorderRadius.circular(20),
                             child: "PLAY".text.white.make(),
-                            onPressed: ()=> {
-                              Get.to(() => OnlineHard(), arguments:[ 1, hard])
-                            }),
+                            onPressed: () => {
+                                  Get.to(() => OnlineHard(),
+                                      arguments: [1, hard])
+                                }),
                       )
                     ],
                   ),
                 ],
               ),
             )
-            // .height(100)
+                // .height(100)
                 .width(MediaQuery.of(context).size.width)
                 .rounded
+                .white
                 .border(color: Colors.green)
                 .padding(EdgeInsets.all(20))
-                .make().animate().fade(duration: 200.ms).scale(delay: 200.ms),
+                .make()
+                .animate()
+                .fade(duration: 200.ms)
+                .scale(delay: 200.ms),
             10.heightBox,
             VxBox(
               child: Column(
@@ -92,7 +109,12 @@ class _HardModeState extends State<HardMode> {
                           .bold
                           .make(),
                       Spacer(),
-                      '$hard x $hard'.text.size(15).fontFamily(Fonts.figtree).bold.make(),
+                      '$hard x $hard'
+                          .text
+                          .size(15)
+                          .fontFamily(Fonts.figtree)
+                          .bold
+                          .make(),
                     ],
                   ),
                   Divider(),
@@ -106,27 +128,34 @@ class _HardModeState extends State<HardMode> {
                             color: Colors.green,
                             borderRadius: BorderRadius.circular(20),
                             child: "PLAY".text.white.make(),
-                            onPressed: ()=> {
-                              Get.to(() => OfflineGame(), arguments:[ 1, hard])
-                            }),
+                            onPressed: () => {
+                                  Get.to(() => OfflineGame(),
+                                      arguments: [1, hard])
+                                }),
                       )
                     ],
                   ),
                 ],
               ),
             )
-            // .height(100)
+                // .height(100)
                 .width(MediaQuery.of(context).size.width)
                 .rounded
                 .border(color: Colors.green)
+                .white
                 .padding(EdgeInsets.all(20))
-                .make().animate().fade(duration: 400.ms).scale(delay: 400.ms),
+                .make()
+                .animate()
+                .fade(duration: 400.ms)
+                .scale(delay: 400.ms),
           ],
         ),
       )
           .height(MediaQuery.of(context).size.height)
           .width(MediaQuery.of(context).size.width)
           .padding(EdgeInsets.all(20))
+          .bgImage(DecorationImage(
+              image: AssetImage(Images.home_bg), fit: BoxFit.cover))
           .white
           .make(),
     );

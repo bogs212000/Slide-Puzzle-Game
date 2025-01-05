@@ -25,15 +25,23 @@ class _EasyModeState extends State<EasyMode> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        foregroundColor: Colors.white,
+        backgroundColor: Colors.transparent,
         centerTitle: true,
-        title: 'Easy Mode'.text.bold.make(),
+        title: 'Easy Mode'.text.white.bold.make(),
       ),
       body: VxBox(
         child: Column(
           children: [
-            Txt.note_play_online.text.size(15).fontFamily(Fonts.figtree).bold.make(),
+            70.heightBox,
+            Txt.note_play_online.text
+                .size(15)
+                .fontFamily(Fonts.figtree)
+                .white
+                .bold
+                .make(),
             20.heightBox,
             VxBox(
               child: Column(
@@ -48,8 +56,12 @@ class _EasyModeState extends State<EasyMode> {
                           .make(),
                       Image.asset(Assets.trophy, height: 20),
                       Spacer(),
-                      '$easy x $easy'.text.size(15).fontFamily(Fonts.figtree).bold.make(),
-
+                      '$easy x $easy'
+                          .text
+                          .size(15)
+                          .fontFamily(Fonts.figtree)
+                          .bold
+                          .make(),
                     ],
                   ),
                   Divider(),
@@ -63,9 +75,10 @@ class _EasyModeState extends State<EasyMode> {
                             color: Colors.green,
                             borderRadius: BorderRadius.circular(20),
                             child: "PLAY".text.white.make(),
-                            onPressed: ()=> {
-                              Get.to(() => OnlineEasy(), arguments:[ 1, easy])
-                            }),
+                            onPressed: () => {
+                                  Get.to(() => OnlineEasy(),
+                                      arguments: [1, easy])
+                                }),
                       )
                     ],
                   ),
@@ -75,9 +88,13 @@ class _EasyModeState extends State<EasyMode> {
                 // .height(100)
                 .width(MediaQuery.of(context).size.width)
                 .rounded
+                .white
                 .border(color: Colors.green)
                 .padding(EdgeInsets.all(20))
-                .make().animate().fade(duration: 200.ms).scale(delay: 200.ms),
+                .make()
+                .animate()
+                .fade(duration: 200.ms)
+                .scale(delay: 200.ms),
             10.heightBox,
             VxBox(
               child: Column(
@@ -91,7 +108,12 @@ class _EasyModeState extends State<EasyMode> {
                           .bold
                           .make(),
                       Spacer(),
-                      '$easy x $easy'.text.size(15).fontFamily(Fonts.figtree).bold.make(),
+                      '$easy x $easy'
+                          .text
+                          .size(15)
+                          .fontFamily(Fonts.figtree)
+                          .bold
+                          .make(),
                     ],
                   ),
                   Divider(),
@@ -105,27 +127,34 @@ class _EasyModeState extends State<EasyMode> {
                             color: Colors.green,
                             borderRadius: BorderRadius.circular(20),
                             child: "PLAY".text.white.make(),
-                            onPressed: ()=> {
-                              Get.to(() => OfflineGame(), arguments:[ 1, easy])
-                            }),
+                            onPressed: () => {
+                                  Get.to(() => OfflineGame(),
+                                      arguments: [1, easy])
+                                }),
                       )
                     ],
                   ),
                 ],
               ),
             )
-            // .height(100)
+                // .height(100)
                 .width(MediaQuery.of(context).size.width)
                 .rounded
+                .white
                 .border(color: Colors.green)
                 .padding(EdgeInsets.all(20))
-                .make().animate().fade(duration: 400.ms).scale(delay: 400.ms),
+                .make()
+                .animate()
+                .fade(duration: 400.ms)
+                .scale(delay: 400.ms),
           ],
         ),
       )
           .height(MediaQuery.of(context).size.height)
           .width(MediaQuery.of(context).size.width)
           .padding(EdgeInsets.all(20))
+          .bgImage(DecorationImage(
+              image: AssetImage(Images.home_bg), fit: BoxFit.cover))
           .white
           .make(),
     );

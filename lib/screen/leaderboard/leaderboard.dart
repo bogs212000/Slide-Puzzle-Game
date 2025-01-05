@@ -18,10 +18,12 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        foregroundColor: Colors.white,
+        backgroundColor: Colors.transparent,
         centerTitle: true,
-        title: 'Leaderboard'.text.bold.make(),
+        title: 'Leaderboard'.text.white.bold.make(),
       ),
       body: VxBox(
         child: StreamBuilder<QuerySnapshot>(
@@ -138,7 +140,11 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                           .border(color: Colors.green)
                           .rounded
                           .shadowXs
-                          .color(accEmail == FirebaseAuth.instance.currentUser!.email.toString() ? Vx.green100 : Colors.white)
+                          .color(accEmail ==
+                                  FirebaseAuth.instance.currentUser!.email
+                                      .toString()
+                              ? Vx.green100
+                              : Colors.white.withOpacity(0.8))
                           .make(),
                     ),
                   ).animate().fade(duration: 400.ms).scale(delay: 400.ms);
@@ -148,6 +154,8 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
       )
           .height(MediaQuery.of(context).size.height)
           .width(MediaQuery.of(context).size.width)
+          .bgImage(DecorationImage(
+              image: AssetImage(Images.home_bg), fit: BoxFit.cover))
           .white
           .make(),
     );

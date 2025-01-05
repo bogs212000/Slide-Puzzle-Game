@@ -6,6 +6,8 @@ import 'package:slide_puzzle/functions/play.functions.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../../utils/fonts.dart';
+import '../../../utils/images.dart';
+import '../../auth/auth.wrapper.dart';
 
 
 class OfflineGame extends StatefulWidget {
@@ -147,6 +149,33 @@ class _OfflineGameState extends State<OfflineGame> {
     );
   }
 
+  void exit() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Notice'),
+          content: Text('Are you sure you want to exit game?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                Get.offAll(AuthWrapper());
+              },
+              child: Text('Confirm'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   void dispose() {
     timer?.cancel();
@@ -156,16 +185,16 @@ class _OfflineGameState extends State<OfflineGame> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       // appBar: AppBar(
       //   title: Text('Sliding Puzzle'),
       // ),
-      body: Column(
-        children: [
-          30.heightBox,
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: VxBox(
+        child: Column(
+          children: [
+            30.heightBox,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 VxBox(
                   child: Row(
@@ -183,7 +212,12 @@ class _OfflineGameState extends State<OfflineGame> {
                     .border(color: Colors.green, width: 0.5)
                     .white
                     .make(),
-                Spacer(),
+                IconButton(
+                    onPressed: () {
+                      exit();
+                    },
+                    icon: Icon(Icons.home_filled,
+                        size: 30, color: Colors.green)),
                 VxBox(
                   child: Row(
                     children: [
@@ -202,48 +236,54 @@ class _OfflineGameState extends State<OfflineGame> {
                     .make(),
               ],
             ),
-          ),
-          Expanded(
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: grid.map((row) {
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: row.map((tile) {
-                      return GestureDetector(
-                        onTap: tile == null
-                            ? null
-                            : () {
-                          // Get row and column of the tapped tile
-                          int rowIndex = grid.indexOf(row);
-                          int colIndex = row.indexOf(tile);
-                          moveTile(rowIndex, colIndex);
-                        },
-                        child: Container(
-                          width: 60,
-                          height: 60,
-                          margin: EdgeInsets.all(4),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color: tile == null ? Colors.grey : Colors.green,
-                            borderRadius: BorderRadius.circular(8),
+            Expanded(
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: grid.map((row) {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: row.map((tile) {
+                        return GestureDetector(
+                          onTap: tile == null
+                              ? null
+                              : () {
+                            // Get row and column of the tapped tile
+                            int rowIndex = grid.indexOf(row);
+                            int colIndex = row.indexOf(tile);
+                            moveTile(rowIndex, colIndex);
+                          },
+                          child: Container(
+                            width: 50,
+                            height: 50,
+                            margin: EdgeInsets.all(2),
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              color: tile == null ? Colors.grey : Colors.green,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Text(
+                              tile?.toString() ?? '',
+                              style:
+                              TextStyle(color: Colors.white, fontSize: 24),
+                            ),
                           ),
-                          child: Text(
-                            tile?.toString() ?? '',
-                            style:
-                            TextStyle(color: Colors.white, fontSize: 24),
-                          ),
-                        ),
-                      );
-                    }).toList(),
-                  );
-                }).toList(),
+                        );
+                      }).toList(),
+                    );
+                  }).toList(),
+                ),
               ),
             ),
-          ),
-        ],
-      ),
+          ],
+        ),
+      ).height(MediaQuery.of(context).size.height)
+          .width(MediaQuery.of(context).size.width)
+          .padding(EdgeInsets.all(20))
+          .bgImage(DecorationImage(
+          image: AssetImage(Images.home_bg), fit: BoxFit.cover))
+          .white
+          .make(),
       floatingActionButton: FloatingActionButton(
         onPressed: initializeGame,
         child: Icon(Icons.refresh),
