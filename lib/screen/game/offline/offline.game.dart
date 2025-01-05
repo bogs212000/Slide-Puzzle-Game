@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:math';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:slide_puzzle/functions/play.functions.dart';
@@ -7,8 +8,8 @@ import 'package:velocity_x/velocity_x.dart';
 
 import '../../../utils/fonts.dart';
 import '../../../utils/images.dart';
+import '../../../utils/sounds.dart';
 import '../../auth/auth.wrapper.dart';
-
 
 class OfflineGame extends StatefulWidget {
   @override
@@ -27,7 +28,6 @@ class _OfflineGameState extends State<OfflineGame> {
   final int movePenalty = 10; // Penalty per move
   final int timePenalty = 5; // Penalty per second
 
-
   @override
   void initState() {
     super.initState();
@@ -35,7 +35,8 @@ class _OfflineGameState extends State<OfflineGame> {
   }
 
   void calculateScore() {
-    score = baseScore - (movePenalty * moveCount) - (timePenalty * elapsedSeconds);
+    score =
+        baseScore - (movePenalty * moveCount) - (timePenalty * elapsedSeconds);
     if (score < 0) score = 0; // Ensure score is not negative
     print(score);
   }
@@ -126,6 +127,11 @@ class _OfflineGameState extends State<OfflineGame> {
     }
     return true;
   }
+  late AudioPlayer player = AudioPlayer();
+
+  void tap() {
+    player.play(AssetSource(AppSounds.tap));
+  }
 
   void showWinDialog() {
     showDialog(
@@ -207,7 +213,7 @@ class _OfflineGameState extends State<OfflineGame> {
                   ),
                 )
                     .padding(
-                    EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5))
+                        EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5))
                     .rounded
                     .border(color: Colors.green, width: 0.5)
                     .white
@@ -216,25 +222,40 @@ class _OfflineGameState extends State<OfflineGame> {
                     onPressed: () {
                       exit();
                     },
-                    icon: Icon(Icons.home_filled,
-                        size: 30, color: Colors.green)),
+                    icon:
+                        Icon(Icons.home_filled, size: 30, color: Colors.green)),
                 VxBox(
                   child: Row(
                     children: [
                       Icon(Icons.timer, color: Colors.green),
                       5.widthBox,
                       'Timer : '.text.fontFamily(Fonts.figtree).bold.make(),
-                      '${elapsedSeconds}s'.text.fontFamily(Fonts.figtree).bold.make(),
+                      '${elapsedSeconds}s'
+                          .text
+                          .fontFamily(Fonts.figtree)
+                          .bold
+                          .make(),
                     ],
                   ),
                 )
                     .padding(
-                    EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5))
+                        EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5))
                     .rounded
                     .border(color: Colors.green, width: 0.5)
                     .white
                     .make(),
               ],
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child:
+                  'Estimated Score ($baseScore - (10 * move count) - (5 * elapsed seconds)) : $score'
+                      .text
+                      .white
+                      .fontFamily(Fonts.figtree)
+                      .size(10)
+                      .bold
+                      .make(),
             ),
             Expanded(
               child: Center(
@@ -248,11 +269,13 @@ class _OfflineGameState extends State<OfflineGame> {
                           onTap: tile == null
                               ? null
                               : () {
-                            // Get row and column of the tapped tile
-                            int rowIndex = grid.indexOf(row);
-                            int colIndex = row.indexOf(tile);
-                            moveTile(rowIndex, colIndex);
-                          },
+                                  // Get row and column of the tapped tile
+                                  int rowIndex = grid.indexOf(row);
+                                  int colIndex = row.indexOf(tile);
+                                  moveTile(rowIndex, colIndex);
+                                  calculateScore();
+                                  tap();
+                                },
                           child: Container(
                             width: 50,
                             height: 50,
@@ -265,7 +288,7 @@ class _OfflineGameState extends State<OfflineGame> {
                             child: Text(
                               tile?.toString() ?? '',
                               style:
-                              TextStyle(color: Colors.white, fontSize: 24),
+                                  TextStyle(color: Colors.white, fontSize: 24),
                             ),
                           ),
                         );
@@ -277,11 +300,12 @@ class _OfflineGameState extends State<OfflineGame> {
             ),
           ],
         ),
-      ).height(MediaQuery.of(context).size.height)
+      )
+          .height(MediaQuery.of(context).size.height)
           .width(MediaQuery.of(context).size.width)
           .padding(EdgeInsets.all(20))
           .bgImage(DecorationImage(
-          image: AssetImage(Images.home_bg), fit: BoxFit.cover))
+              image: AssetImage(Images.home_bg), fit: BoxFit.cover))
           .white
           .make(),
       floatingActionButton: FloatingActionButton(

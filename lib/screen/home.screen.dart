@@ -15,6 +15,7 @@ import 'package:slide_puzzle/screen/game/mode/easy.dart';
 import 'package:slide_puzzle/screen/leaderboard/leaderboard.dart';
 import 'package:slide_puzzle/screen/loadiing/loading.screen.dart';
 import 'package:slide_puzzle/screen/profile/profile.screen.dart';
+import 'package:slide_puzzle/screen/profile/settings.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../functions/fetch.dart';
@@ -189,7 +190,7 @@ class _HomePageState extends State<HomePage> {
                               color: Colors.white, size: 30)),
                       15.widthBox,
                       if(role == 'admin')GestureDetector(
-                          onTap: () => {Get.to(() => ProfileScreen())},
+                          onTap: () => {Get.to(() => SettingsScreen())},
                           child: const Icon(Icons.settings,
                               color: Colors.white, size: 30)),
                       Spacer(),
