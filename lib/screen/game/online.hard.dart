@@ -40,7 +40,29 @@ class _OnlineHardState extends State<OnlineHard> {
     score =
         baseScore - (movePenalty * moveCount) - (timePenalty * elapsedSeconds);
     if (score < 0) score = 0; // Ensure score is not negative
+    if(score == 0) showWinDialogZero();
     print(score);
+  }
+  void showWinDialogZero() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Notice!'),
+          content: Text(
+              "Too many moves! You've been playing this mode for a long time. Please try again!"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                initializeGame(); // Restart the game
+              },
+              child: Text('Play Again'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   void initializeGame() {

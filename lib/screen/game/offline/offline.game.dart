@@ -37,7 +37,8 @@ class _OfflineGameState extends State<OfflineGame> {
   void calculateScore() {
     score =
         baseScore - (movePenalty * moveCount) - (timePenalty * elapsedSeconds);
-    if (score < 0) score = 0; // Ensure score is not negative
+    if (score < 0) score = 0;
+    if(score == 0) showWinDialogZero();// Ensure score is not negative
     print(score);
   }
 
@@ -141,6 +142,28 @@ class _OfflineGameState extends State<OfflineGame> {
           title: Text('Congratulations!'),
           content: Text(
               'You solved the puzzle in $moveCount moves and $elapsedSeconds seconds!. $score Scores!'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                initializeGame(); // Restart the game
+              },
+              child: Text('Play Again'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void showWinDialogZero() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Notice!'),
+          content: Text(
+              "Too many moves! You've been playing this mode for a long time. Please try again!"),
           actions: [
             TextButton(
               onPressed: () {
